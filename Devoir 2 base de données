@@ -1,0 +1,49 @@
+1) 
+SELECT nom FROM familles WHERE nom LIKE "M%";
+
+2) 
+SELECT email FROM observateurs WHERE fonction NOT LIKE "doctorant";
+
+3) 
+SELECT id_personne, SUM(duree) FROM observations GROUP BY id_personne;
+
+4) 
+SELECT prenom, nom, duree FROM observateurs,
+(SELECT id_personne, SUM(duree) AS duree FROM observations GROUP BY id_personne) as IdObsTemps
+WHERE observateurs.id_personne = IdObsTemps.id_personne;
+
+5) 
+SELECT nom FROM animaux a, details d
+WHERE a.id_animal = d.id_animal 
+AND d.quantite = 0;
+
+6) 
+SELECT l.nom, localite FROM lieux l, observations os, observateurs o
+WHERE l.id_lieu = os.id_lieu
+AND os.id_personne = o.id_personne
+AND o.fonction = "professeur";
+
+7) 
+SELECT nom, COUNT(*) AS visites FROM lieux l, observations os
+WHERE l.id_lieu = os.id_lieu
+GROUP BY l.id_lieu
+ORDER BY visites DESC LIMIT 2;
+
+8) 
+SELECT o.nom, o.prenom FROM observateurs o, observations os, animaux a, details d
+WHERE o.id_personne = os.id_personne
+AND os.id_observation = d.id_observation
+AND d.id_animal = a.id_animal
+AND a.protege = "1"
+GROUP BY o.nom, o.prenom
+ORDER BY SUM(d.quantite) DESC LIMIT 1; 
+
+9) 
+SELECT o.fonction FROM observateurs o, observations os, details d 
+WHERE o.id_personne = os.id_personne
+AND os.id_observation = d.id_observation
+GROUP by o.fonction
+ORDER BY SUM(d.quantite)/ SUM(os.duree) DESC LIMIT 1;
+
+10) 
+pas réussi
