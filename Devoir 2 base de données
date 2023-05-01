@@ -34,7 +34,7 @@ SELECT o.nom, o.prenom FROM observateurs o, observations os, animaux a, details 
 WHERE o.id_personne = os.id_personne
 AND os.id_observation = d.id_observation
 AND d.id_animal = a.id_animal
-AND a.protege = "1"
+AND a.protege = 1
 GROUP BY o.nom, o.prenom
 ORDER BY SUM(d.quantite) DESC LIMIT 1; 
 
